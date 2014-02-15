@@ -1,0 +1,71 @@
+%
+% A simple LaTeX template for Books
+%  (c) Aleksander Morgado <aleksander@es.gnu.org>
+%  Released into public domain
+%
+
+\documentclass[openany]{book}
+\usepackage[a4paper, top=3cm, bottom=3cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+
+\begin{document}
+
+
+\pagestyle{empty}
+%\pagenumbering{}
+% Set book title
+\title{\textbf{\huge{===TITLE===}}}
+% Include Author name and Copyright holder name
+===AUTHORS===
+\date{}
+
+
+
+% 1st page for the Title
+%-------------------------------------------------------------------------------
+\maketitle
+
+
+% 2nd page, thanks message
+%-------------------------------------------------------------------------------
+\thispagestyle{empty}
+\thanks{Thanks to Kevin Lawver and all the folks at Ficly.}
+\newpage
+
+
+
+% General definitions for all Chapters
+%-------------------------------------------------------------------------------
+
+% Define Page style for all chapters
+\pagestyle{fancy}
+% Delete the current section for header and footer
+\fancyhf{}
+% Set custom header
+\lhead[]{\thepage}
+\rhead[\thepage]{}
+
+% Set double spacing for the text
+\doublespacing
+
+
+% Last pages for ToC
+%-------------------------------------------------------------------------------
+\pagenumbering{gobble}
+% Include dots between chapter name and page number
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+%Finally, include the ToC
+\tableofcontents
+
+\newpage
+\thispagestyle{empty}
+
+
+
+% Set arabic (1,2,3...) page numbering
+\pagenumbering{arabic}
+\clearpage
+\setcounter{page}{1}

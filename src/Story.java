@@ -57,22 +57,24 @@ public class Story {
         StringBuilder sb = new StringBuilder(text.length() * 2);
         if (addTitle) {
             if (useTex) {
+                sb.append("%% Enumerated chapter\n %%-------------------------------------------------------------------------------\n");
                 sb.append("\\chapter{" + skel.getTitle() + "} \n \n");                
             } else {
                 sb.append(skel.getTitle() + "\n");
             }
         }
         if (addAuthor) {
-            if (useTex ) {
-                // NOT YET SUPPORTED
-            } else {
+            if (!useTex ) {
                 sb.append(skel.getAuthor() + "\n");
             }
         }
         if (useTex) {
-            sb.append(text);
+            // convert speech marks to Tex formatting and convert apostrophes correctly
+            String texText = text.replaceAll("“", "``").replaceAll("”", "''").replaceAll("’","'");
+            sb.append(texText);
         } else {
-            sb.append(text);            
+            // convert apostrophes only
+            sb.append(text.replaceAll("’","'"));            
         }
         sb.append("\n\n");
         return sb.toString();

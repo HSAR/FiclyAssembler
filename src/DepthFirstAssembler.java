@@ -4,17 +4,19 @@ import java.util.Stack;
 public class DepthFirstAssembler extends AbstractAssembler {
 
     private Stack<StorySkeleton> stack;
-
+    
     private boolean showTitles = true;
     private boolean showAuthors = true;
+    
+    public DepthFirstAssembler(String seriesTitle, Story firstStory, Set<StorySkeleton> stories) {
+        super(seriesTitle, firstStory, stories);
+        stack = new Stack<StorySkeleton>();
+        stack.push(firstStory.getSkeleton());
+    }
 
-    /**
-     * @param firstStory
-     * 
-     *            Runs text assembly
-     */
+    
     public DepthFirstAssembler(Story firstStory, Set<StorySkeleton> stories) {
-        super(firstStory, stories);
+        super(null, firstStory, stories);
         stack = new Stack<StorySkeleton>();
         stack.push(firstStory.getSkeleton());
     }
@@ -44,8 +46,19 @@ public class DepthFirstAssembler extends AbstractAssembler {
 
     @Override
     public String toTex() {
-        // TODO Auto-generated method stub
-        return null;
+        // auto-add header boilerplate
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            Story curr = stack.pop().getStory();
+            if (curr != null) {
+                // useTex = TRUE, authors cannot be shown in Tex (per story, anyway), showTitles = configurable
+                sb.append(curr.getText(true, false, showTitles));
+                for (StorySkeleton sequel : curr.getSequels()) {
+                    stack.push(sequel);
+                }
+            }
+        }
+        return sb.toString();
     }
 
 }
