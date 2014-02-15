@@ -1,12 +1,14 @@
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 public class Story {
 
     private List<StorySkeleton> prequels;
     private List<StorySkeleton> sequels;
 
     private String text;
-    
+
     private StorySkeleton skel;
 
     public Story(List<StorySkeleton> prequels, List<StorySkeleton> sequels, String title, String author, String url, String text) {
@@ -37,7 +39,8 @@ public class Story {
         if (showSeries) {
             return skel.getTitle();
         } else {
-            return skel.getTitle().split(": ")[1];
+            String[] splitTitle = skel.getTitle().split(": ");
+            return splitTitle[splitTitle.length - 1];
         }
     }
 
@@ -59,23 +62,24 @@ public class Story {
             String title = getTitle(addSeries);
             if (useTex) {
                 sb.append("%% Enumerated chapter\n %%-------------------------------------------------------------------------------\n");
-                sb.append("\\chapter{" + title + "} \n \n");                
+                sb.append("\\chapter{" + title + "} \n \n");
             } else {
                 sb.append(title + "\n");
             }
         }
         if (addAuthor) {
-            if (!useTex ) {
+            if (!useTex) {
                 sb.append(skel.getAuthor() + "\n");
             }
         }
         String processedText = "";
+        // decode all that random &quote; HTML stuff
+        processedText = StringEscapeUtils.unescapeHtml4(text);
         if (useTex) {
             // convert speech marks to Tex formatting
-            processedText = text.replace("“", "``").replace("”", "''");
-            processedText = processedText.replace("&quot;", "''");
+            processedText = processedText.replace("“", "``").replace("”", "''");
             // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("‘","`").replace("’","'").replace("–","-");
+            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
             // replace <em></em> tags with tex \textit{}
             processedText = processedText.replace("<em>", "\\textit{");
             processedText = processedText.replace("</em>", "}");
@@ -87,20 +91,20 @@ public class Story {
             processedText = processedText.replace("</p>", "\n\n");
             // add line breaks at appropriate positions (regex used for security)
             processedText = processedText.replaceAll("<br.*(/)*>", "\\\\");
-            
+
         } else {
             // convert apostrophes only
-            processedText = text.replaceAll("’","'");      
+            processedText = text.replaceAll("’", "'");
             // remove paragraph tags and line break tags
-            processedText = processedText.replaceAll("<.*>", "");    
+            processedText = processedText.replaceAll("<.*>", "");
         }
         // ellipses are handled oddly too…
-        processedText = processedText.replace("…","... ");
+        processedText = processedText.replace("…", "... ");
         sb.append(processedText);
         sb.append("\n\n");
         return sb.toString();
     }
-    
+
     public StorySkeleton getSkeleton() {
         return skel;
     }
@@ -129,6 +133,5 @@ public class Story {
             return false;
         return true;
     }
-    
-    
+
 }
