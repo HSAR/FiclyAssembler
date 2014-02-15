@@ -29,6 +29,7 @@ public class FiclyAssembler {
         //Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/36673"));
         Series test = new Series("Horizon's Edge", FiclyUtils.getStoryWithURL("http://ficly.com/stories/16559"));
         test.fetch();
+        //System.out.println(FiclyUtils.getStoryWithURL("http://ficly.com/stories/16559").getText(true, true, true, false));
         System.out.println(test.assembleTex(Series.AssemblerType.depth_first));
     }
 

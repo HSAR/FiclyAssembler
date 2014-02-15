@@ -87,16 +87,17 @@ public class Story {
             processedText = processedText.replace("<strong>", "\\textbf{");
             processedText = processedText.replace("</strong>", "}");
             // add paragraphing at appropriate positions <br.*/>
-            processedText = processedText.replace("<p>", "");
-            processedText = processedText.replace("</p>", "\n\n");
-            // add line breaks at appropriate positions (regex used for security)
-            processedText = processedText.replaceAll("<br.*(/)*>", "\\\\");
+            //processedText = processedText.replace("<p>", "");
+            //processedText = processedText.replace("</p>", "\n\n");
+            processedText = processedText.replace("<p>", "\\par ");
+            processedText = processedText.replace("</p>", "");
+            // add line breaks at appropriate positions (regex used for security), and newline chars to readability.
+            // quad backslashes needed to 1) escape java to "\\\\" 2) escape regex to "\\"
+            processedText = processedText.replaceAll("<br[\\s]*[/]*>", "\\\\\\\\ \\n");
 
         } else {
-            // convert apostrophes only
-            processedText = text.replaceAll("’", "'");
-            // remove paragraph tags and line break tags
-            processedText = processedText.replaceAll("<.*>", "");
+            // Ficly handles quote marks, apostrophes and dashes oddly
+            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
         }
         // ellipses are handled oddly too…
         processedText = processedText.replace("…", "... ");
