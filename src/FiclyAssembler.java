@@ -27,7 +27,7 @@ public class FiclyAssembler {
     public static void main(String[] args) {
         FiclyAssembler fa = new FiclyAssembler();
         //Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/36673"));
-        Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/32329"));
+        Series test = new Series("Ascension", FiclyUtils.getStoryWithURL("http://ficly.com/stories/36673"));
         test.fetch();
         System.out.println(test.assembleTex(Series.AssemblerType.depth_first));
     }

@@ -33,11 +33,11 @@ public class Story {
         return skel.getTitle();
     }
 
-    public String getTitle(boolean stripSeries) {
-        if (stripSeries) {
-            return skel.getTitle().split(": ")[1];
-        } else {
+    public String getTitle(boolean showSeries) {
+        if (showSeries) {
             return skel.getTitle();
+        } else {
+            return skel.getTitle().split(": ")[1];
         }
     }
 
@@ -53,14 +53,15 @@ public class Story {
         return sequels;
     }
 
-    public String getText(boolean useTex, boolean addAuthor, boolean addTitle) {
+    public String getText(boolean useTex, boolean addAuthor, boolean addTitle, boolean addSeries) {
         StringBuilder sb = new StringBuilder(text.length() * 2);
         if (addTitle) {
+            String title = getTitle(addSeries);
             if (useTex) {
                 sb.append("%% Enumerated chapter\n %%-------------------------------------------------------------------------------\n");
-                sb.append("\\chapter{" + skel.getTitle() + "} \n \n");                
+                sb.append("\\chapter{" + title + "} \n \n");                
             } else {
-                sb.append(skel.getTitle() + "\n");
+                sb.append(title + "\n");
             }
         }
         if (addAuthor) {
@@ -71,9 +72,10 @@ public class Story {
         String processedText = "";
         if (useTex) {
             // convert speech marks to Tex formatting
-            processedText = text.replaceAll("“", "``").replaceAll("”", "''");
-            // Ficly handles apostrophes and dashes oddly
-            processedText = processedText.replaceAll("’","'").replaceAll("–","-");
+            processedText = text.replace("“", "``").replace("”", "''");
+            processedText = processedText.replace("&quot;", "''");
+            // Ficly handles quote marks, apostrophes and dashes oddly
+            processedText = processedText.replace("‘","`").replace("’","'").replace("–","-");
             // replace <em></em> tags with tex \textit{}
             processedText = processedText.replace("<em>", "\\textit{");
             processedText = processedText.replace("</em>", "}");
@@ -92,6 +94,8 @@ public class Story {
             // remove paragraph tags and line break tags
             processedText = processedText.replaceAll("<.*>", "");    
         }
+        // ellipses are handled oddly too…
+        processedText = processedText.replace("…","... ");
         sb.append(processedText);
         sb.append("\n\n");
         return sb.toString();

@@ -5,6 +5,7 @@ public class DepthFirstAssembler extends AbstractAssembler {
 
     private Stack<StorySkeleton> stack;
     
+    private boolean showSeries = false;
     private boolean showTitles = true;
     private boolean showAuthors = true;
     
@@ -35,7 +36,7 @@ public class DepthFirstAssembler extends AbstractAssembler {
         while (!stack.isEmpty()) {
             Story curr = stack.pop().getStory();
             if (curr != null) {
-                sb.append(curr.getText(false, showAuthors, showTitles));
+                sb.append(curr.getText(false, showAuthors, showTitles, showSeries));
                 for (StorySkeleton sequel : curr.getSequels()) {
                     stack.push(sequel);
                 }
@@ -51,8 +52,8 @@ public class DepthFirstAssembler extends AbstractAssembler {
         while (!stack.isEmpty()) {
             Story curr = stack.pop().getStory();
             if (curr != null) {
-                // useTex = TRUE, authors cannot be shown in Tex (per story, anyway), showTitles = configurable
-                sb.append(curr.getText(true, false, showTitles));
+                // useTex = TRUE, authors cannot be shown in Tex (per story, anyway)
+                sb.append(curr.getText(true, false, showTitles, showSeries));
                 for (StorySkeleton sequel : curr.getSequels()) {
                     stack.push(sequel);
                 }
