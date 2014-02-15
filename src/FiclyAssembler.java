@@ -10,6 +10,9 @@ public class FiclyAssembler {
     // "System Check"
     // http://ficly.com/stories/36673
     
+    // "The Armory"
+    // http://ficly.com/stories/32329
+    
     public static String texheader = "";
 
     public FiclyAssembler() {
@@ -24,7 +27,7 @@ public class FiclyAssembler {
     public static void main(String[] args) {
         FiclyAssembler fa = new FiclyAssembler();
         //Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/36673"));
-        Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/37571"));
+        Series test = new Series("Test Series Please Ignore", FiclyUtils.getStoryWithURL("http://ficly.com/stories/32329"));
         test.fetch();
         System.out.println(test.assembleTex(Series.AssemblerType.depth_first));
     }

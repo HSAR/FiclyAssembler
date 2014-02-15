@@ -68,14 +68,31 @@ public class Story {
                 sb.append(skel.getAuthor() + "\n");
             }
         }
+        String processedText = "";
         if (useTex) {
-            // convert speech marks to Tex formatting and convert apostrophes correctly
-            String texText = text.replaceAll("“", "``").replaceAll("”", "''").replaceAll("’","'");
-            sb.append(texText);
+            // convert speech marks to Tex formatting
+            processedText = text.replaceAll("“", "``").replaceAll("”", "''");
+            // Ficly handles apostrophes and dashes oddly
+            processedText = processedText.replaceAll("’","'").replaceAll("–","-");
+            // replace <em></em> tags with tex \textit{}
+            processedText = processedText.replace("<em>", "\\textit{");
+            processedText = processedText.replace("</em>", "}");
+            // replace <strong></strong> tags with tex \textbf{}
+            processedText = processedText.replace("<strong>", "\\textbf{");
+            processedText = processedText.replace("</strong>", "}");
+            // add paragraphing at appropriate positions <br.*/>
+            processedText = processedText.replace("<p>", "");
+            processedText = processedText.replace("</p>", "\n\n");
+            // add line breaks at appropriate positions (regex used for security)
+            processedText = processedText.replaceAll("<br.*(/)*>", "\\\\");
+            
         } else {
             // convert apostrophes only
-            sb.append(text.replaceAll("’","'"));            
+            processedText = text.replaceAll("’","'");      
+            // remove paragraph tags and line break tags
+            processedText = processedText.replaceAll("<.*>", "");    
         }
+        sb.append(processedText);
         sb.append("\n\n");
         return sb.toString();
     }

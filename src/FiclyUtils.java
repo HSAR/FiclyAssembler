@@ -59,8 +59,12 @@ public class FiclyUtils {
         return doc.select("#story .fn").first().ownText();
     }
 
-    private static String getText(Document doc) {
+    private static String getPlainText(Document doc) {
         return Jsoup.parse(doc.select(".entry-content").first().html()).text();
+    }
+
+    private static String getText(Document doc) {
+        return doc.select(".entry-content").first().html();
     }
 
     /**
