@@ -1,1 +1,16 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Output Files #
+ficly_*.txt
+
+
+# Eclipse Project Files #
+.project
+.classpath
+.settings
 /bin

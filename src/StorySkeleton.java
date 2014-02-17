@@ -23,6 +23,10 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         return title;
     }
 
+    public String getSeries() {
+        return title.split(": ")[0];
+    }
+    
     public String getAuthor() {
         return author;
     }

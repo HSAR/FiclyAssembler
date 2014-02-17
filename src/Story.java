@@ -26,6 +26,10 @@ public class Story {
         this.sequels = sequels;
         this.text = text;
     }
+    
+    public String getAuthor() {
+        return skel.getAuthor();
+    }
 
     public String getText() {
         return text;
@@ -59,7 +63,7 @@ public class Story {
     public String getText(boolean useTex, boolean addAuthor, boolean addTitle, boolean addSeries) {
         StringBuilder sb = new StringBuilder(text.length() * 2);
         if (addTitle) {
-            String title = getTitle(addSeries);
+            String title = getTitle(addSeries).replace("&", "\\&");
             if (useTex) {
                 sb.append("%% Enumerated chapter\n %%-------------------------------------------------------------------------------\n");
                 sb.append("\\chapter{" + title + "} \n \n");
@@ -94,7 +98,9 @@ public class Story {
             // add line breaks at appropriate positions (regex used for security), and newline chars to readability.
             // quad backslashes needed to 1) escape java to "\\\\" 2) escape regex to "\\"
             processedText = processedText.replaceAll("<br[\\s]*[/]*>", "\\\\\\\\ \\n");
-
+            // escape ampersand characters
+            processedText = processedText.replace("&", "\\&");
+            
         } else {
             // Ficly handles quote marks, apostrophes and dashes oddly
             processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
