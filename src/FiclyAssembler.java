@@ -46,7 +46,7 @@ public class FiclyAssembler {
         System.out.println("Program initialised.");
 
         // auto-detects series name
-        Story start = FiclyUtils.getStoryWithURL("http://ficly.com/stories/31023");
+        Story start = FiclyUtils.getStoryWithURL(url);
         seriesName = start.getSkeleton().getSeries();
         // if the series name was successfully found, then remove the series title from all following stories
         showSeries = seriesName.equals(start.getTitle());
@@ -95,7 +95,7 @@ public class FiclyAssembler {
 
     public static void main(String[] args) {
         FiclyAssembler fa = new FiclyAssembler();
-        fa.run("http://ficly.com/stories/31023");
+        fa.run("http://ficly.com/stories/36673");
     }
 
 }
