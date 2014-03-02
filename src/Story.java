@@ -98,6 +98,11 @@ public class Story {
             // add line breaks at appropriate positions (regex used for security), and newline chars to readability.
             // quad backslashes needed to 1) escape java to "\\\\" 2) escape regex to "\\"
             processedText = processedText.replaceAll("<br[\\s]*[/]*>", "\\\\\\\\ \\n");
+            // escape # characters
+            processedText = processedText.replace("#", "\\#");
+            // escape {} characters
+            processedText = processedText.replace("{", "\\{");
+            processedText = processedText.replace("}", "\\}");
             // escape ampersand characters
             processedText = processedText.replace("&", "\\&");
             
