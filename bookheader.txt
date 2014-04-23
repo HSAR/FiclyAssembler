@@ -57,6 +57,8 @@
 \pagenumbering{gobble}
 % Include dots between chapter name and page number
 \renewcommand{\cftchapdotsep}{\cftdotsep}
+% Stop chapter numbers running into chapter names
+\setlength{\cftchapnumwidth}{2em}
 %Finally, include the ToC
 \tableofcontents
 
