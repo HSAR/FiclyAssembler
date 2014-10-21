@@ -81,9 +81,12 @@ public class Story {
         processedText = StringEscapeUtils.unescapeHtml4(text);
         if (useTex) {
             // convert speech marks to Tex formatting
-            processedText = processedText.replace("ì", "``").replace("î", "''");
+            processedText = processedText.replace("‚Äú", "``").replace("‚Äù", "''");
             // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("ë", "`").replace("í", "'").replace("ñ", "-").replace("ó", "-");
+            processedText = processedText.replace("‚Äò", "`").replace("‚Äô", "'").replace("‚Äì", "-").replace("‚Äî", "-");
+            // escape {} characters
+            processedText = processedText.replace("{", "\\{");
+            processedText = processedText.replace("}", "\\}");
             // replace <em></em> tags with tex \textit{}
             processedText = processedText.replace("<em>", "\\textit{");
             processedText = processedText.replace("</em>", "}");
@@ -100,18 +103,15 @@ public class Story {
             processedText = processedText.replaceAll("<br[\\s]*[/]*>", "\\\\\\\\ \n");
             // escape # characters
             processedText = processedText.replace("#", "\\#");
-            // escape {} characters
-            processedText = processedText.replace("{", "\\{");
-            processedText = processedText.replace("}", "\\}");
             // escape ampersand characters
             processedText = processedText.replace("&", "\\&");
             
         } else {
             // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("ë", "`").replace("í", "'").replace("ñ", "-").replace("ó", "-");
+            processedText = processedText.replace("‚Äò", "`").replace("‚Äô", "'").replace("‚Äì", "-").replace("‚Äî", "-");
         }
-        // ellipses are handled oddly tooÖ
-        processedText = processedText.replace("Ö", "... ");
+        // ellipses are handled oddly too‚Ä¶
+        processedText = processedText.replace("‚Ä¶", "... ");
         sb.append(processedText);
         sb.append("\n\n");
         return sb.toString();
