@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FiclyAssembler {
+class FiclyAssembler {
 
     // "Bender's Key"
     // http://ficly.com/stories/37571
@@ -24,10 +24,7 @@ public class FiclyAssembler {
 
     public static String texheader = "";
 
-    private String seriesName;
-    private boolean showSeries;
-
-    public FiclyAssembler() {
+    private FiclyAssembler() {
         try {
             texheader = new String(Files.readAllBytes(Paths.get("bookheader.txt")));
         } catch (IOException e) {
@@ -36,7 +33,7 @@ public class FiclyAssembler {
         }
     }
 
-    public void run(String url) {
+    private void run(String url) {
         // get the current date in short string format to use as filename
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String dateStamp = dateformat.format((new Date()).getTime());
@@ -46,10 +43,17 @@ public class FiclyAssembler {
         System.out.println("Program initialised.");
 
         // auto-detects series name
-        Story start = FiclyUtils.getStoryWithURL(url);
-        seriesName = start.getSkeleton().getSeries();
+        Story start;
+        try {
+            start = FiclyUtils.getStoryWithURL(url);
+        } catch (IOException e) {
+            System.err.println("Could not fetch page.");
+            System.err.println(e.getMessage());
+            return;
+        }
+        String seriesName = start.getSkeleton().getSeries();
         // if the series name was successfully found, then remove the series title from all following stories
-        showSeries = seriesName.equals(start.getTitle());
+        boolean showSeries = seriesName.equals(start.getTitle());
 
         System.out.println("Initial fetch complete.");
         System.out.println("Assembling series \"" + seriesName + "\" by \"" + start.getAuthor() + "\"");

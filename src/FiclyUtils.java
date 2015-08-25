@@ -6,26 +6,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class FiclyUtils {
+class FiclyUtils {
 
-    public static final String storyurl = "http://ficly.com/stories/";
+    private static final String storyurl = "http://ficly.com/stories/";
 
-    public static Story getStoryWithID(int ID) {
+    public static Story getStoryWithID(int ID) throws IOException {
         return FiclyUtils.getStoryWithURL(storyurl + ID);
     }
 
-    public static Story getStory(StorySkeleton skel) {
+    public static Story getStory(StorySkeleton skel) throws IOException {
         return FiclyUtils.getStoryWithURL(skel.geturl());
     }
 
-    public static Story getStoryWithURL(String url) {
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            System.err.println("Could not fetch page.");
-            return null;
-        }
+    public static Story getStoryWithURL(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
         return parseDoc(doc, url);
     }
 

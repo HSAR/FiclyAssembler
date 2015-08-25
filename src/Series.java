@@ -1,5 +1,5 @@
+import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -8,7 +8,7 @@ public class Series {
 
     enum AssemblerType {
         depth_first, breadth_first
-    };
+    }
 
     private String title;
     private Story start;
@@ -29,7 +29,7 @@ public class Series {
         authors.add(start.getSkeleton().getAuthor());
     }
 
-    public Series(int ID) {
+    public Series(int ID) throws IOException {
         super();
         this.start = FiclyUtils.getStoryWithID(ID);
         this.title = start.getTitle().split(": ")[0];
@@ -41,7 +41,14 @@ public class Series {
             unvisited.add(sequel);
         }
         while (!unvisited.isEmpty()) {
-            Story curr = unvisited.poll().fetch();
+            Story curr;
+            try {
+                curr = unvisited.poll().fetch();
+            } catch (IOException e) {
+                System.err.println("Could not fetch page.");
+                System.err.println(e.getMessage());
+                return;
+            }
             stories.add(curr.getSkeleton());
             authors.add(curr.getSkeleton().getAuthor());
             for (StorySkeleton sequel : curr.getSequels()) {
@@ -71,9 +78,8 @@ public class Series {
         if (!authors.isEmpty()) {
             // set authors field, if applicable
             StringBuilder authorSectionSB = new StringBuilder("\\author{");
-            Iterator<String> itr = authors.iterator();
-            while (itr.hasNext()) {
-                authorSectionSB.append(itr.next());
+            for (String author : authors) {
+                authorSectionSB.append(author);
                 authorSectionSB.append("\\\\ \n");
             }
             authorSectionSB.append("}");

@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /**
  * @author HSAR
  * 
@@ -5,10 +7,10 @@
  */
 public class StorySkeleton implements Comparable<StorySkeleton> {
 
-    private String title;
-    private String url;
-    private int ID;
-    private String author;
+    private final String title;
+    private final String url;
+    private final int ID;
+    private final String author;
     private Story story = null;
 
     public StorySkeleton(String title, String author, String url) {
@@ -47,7 +49,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         return story;
     }
     
-    public Story fetch() {
+    public Story fetch() throws IOException {
         if (story == null) {
             story = FiclyUtils.getStory(this);
         }
@@ -71,9 +73,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         if (getClass() != obj.getClass())
             return false;
         StorySkeleton other = (StorySkeleton) obj;
-        if (ID != other.ID)
-            return false;
-        return true;
+        return ID == other.ID;
     }
 
     @Override
