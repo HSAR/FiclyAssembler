@@ -1,6 +1,6 @@
 package io.hsar.Assembler.model;
 
-import io.hsar.Assembler.sites.FiclyUtils;
+import io.hsar.Assembler.sites.SiteUtils;
 
 /**
  * @author HSAR
@@ -20,7 +20,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         this.title = title;
         this.author = author;
         this.url = url;
-        ID = FiclyUtils.getIDfromURL(url);
+        ID = getIDfromURL(url);
     }
 
     public String getTitle() {
@@ -35,8 +35,18 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         return author;
     }
 
-    public String geturl() {
-        return url;
+    /**
+     * @param url - Valid story url
+     * @return Story ID as int, -1 if parse failed.
+     */
+    public static int getIDfromURL(String url) {
+        try {
+            String[] segments = url.split("/");
+            String idStr = segments[segments.length - 1];
+            return Integer.parseInt(idStr);
+        } catch (IllegalArgumentException e) {
+            return -1;
+        }
     }
 
     public int getID() {
@@ -51,11 +61,8 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         return story;
     }
 
-    public Story fetch() {
-        if (story == null) {
-            story = FiclyUtils.getStory(this);
-        }
-        return story;
+    public String getURLString() {
+        return url;
     }
 
     @Override
@@ -83,10 +90,17 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
     @Override
     public int compareTo(StorySkeleton o) {
         if (o instanceof StorySkeleton) {
-            return this.ID - ((StorySkeleton) o).getID();
+            return this.ID - o.getID();
         } else {
             return 0;
         }
+    }
+
+    Story fetch() {
+        if (story == null) {
+            story = SiteUtils.getFromURL(url).getStory(this);
+        }
+        return story;
     }
 
 }
