@@ -1,6 +1,6 @@
 package io.hsar.Assembler.model;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.List;
 
@@ -82,10 +82,6 @@ public class Story {
         // decode all that random &quote; HTML stuff
         processedText = StringEscapeUtils.unescapeHtml4(text); // #TODO Switch to commons-text
         if (useTex) {
-            // convert speech marks to Tex formatting
-            processedText = processedText.replace("“", "``").replace("”", "''");
-            // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
             // escape {} characters
             processedText = processedText.replace("{", "\\{");
             processedText = processedText.replace("}", "\\}");
@@ -99,7 +95,7 @@ public class Story {
             //processedText = processedText.replace("<p>", "");
             //processedText = processedText.replace("</p>", "\n\n");
             processedText = processedText.replace("<p>", "\\par ");
-            processedText = processedText.replace("</p>", "");
+            processedText = processedText.replace("</p>", " "); // This space is vital to the operation of detect end-speech-marks
             // add line breaks at appropriate positions (regex used for security), and newline chars to readability.
             // quad backslashes needed to 1) escape java to "\\\\" 2) escape regex to "\\"
             processedText = processedText.replaceAll("<br[\\s]*[/]*>", "\\\\\\\\ \n");
@@ -108,6 +104,10 @@ public class Story {
             // escape ampersand characters
             processedText = processedText.replace("&", "\\&");
 
+            // Ficly handles quote marks, apostrophes and dashes oddly
+            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
+            // convert speech marks to Tex formatting
+            processedText = replaceSpeechMarksForTex(processedText);
         } else {
             // Ficly handles quote marks, apostrophes and dashes oddly
             processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
@@ -146,6 +146,13 @@ public class Story {
         } else if (!skel.equals(other.skel))
             return false;
         return true;
+    }
+
+    private String replaceSpeechMarksForTex(String text) {
+        String result = text;
+        result = result.replace("“", " ``").replace("”", "'' ");
+        result = result.replaceAll("\\s\"(?!\\s)", " ``").replaceAll("(?<!\\s)\"\\s", "'' ");
+        return result;
     }
 
 }

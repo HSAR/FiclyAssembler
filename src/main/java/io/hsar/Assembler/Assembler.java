@@ -24,6 +24,9 @@ class Assembler {
     // "Airships: A Blood-Red Cloak"
     // http://ficly.com/stories/31023
 
+    // "Gunfire: The Target"
+    // https://ficlatte.com/stories/40067/
+
     private static final String THANKS_LINE_REPLACER = "REPLACE_ME_THANKS_LINE";
     public static String texHeader;
 
