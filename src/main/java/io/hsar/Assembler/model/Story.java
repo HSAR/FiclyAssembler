@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Story {
 
-    private List<StorySkeleton> prequels;
-    private List<StorySkeleton> sequels;
+    private final List<StorySkeleton> prequels;
+    private final List<StorySkeleton> sequels;
 
-    private String text;
+    private final String text;
 
-    private StorySkeleton skel;
+    private final StorySkeleton skel;
 
     public Story(List<StorySkeleton> prequels, List<StorySkeleton> sequels, String title, String author, String url, String text) {
         this.skel = new StorySkeleton(title, author, url);
@@ -41,7 +41,7 @@ public class Story {
         return skel.getTitle();
     }
 
-    public String getTitle(boolean showSeries) {
+    private String getTitle(boolean showSeries) {
         if (showSeries) {
             return skel.getTitle();
         } else {
@@ -68,14 +68,14 @@ public class Story {
             String title = getTitle(addSeries).replace("&", "\\&");
             if (useTex) {
                 sb.append("%% Enumerated chapter\n %%-------------------------------------------------------------------------------\n");
-                sb.append("\\chapter{" + title + "} \n \n");
+                sb.append("\\chapter{").append(title).append("} \n \n");
             } else {
-                sb.append(title + "\n");
+                sb.append(title).append("\n");
             }
         }
         if (addAuthor) {
             if (!useTex) {
-                sb.append(skel.getAuthor() + "\n");
+                sb.append(skel.getAuthor()).append("\n");
             }
         }
         String processedText = "";
@@ -83,9 +83,12 @@ public class Story {
         processedText = StringEscapeUtils.unescapeHtml4(text);
         if (useTex) {
             // convert speech marks to Tex formatting
-            processedText = processedText.replace("�", "``").replace("�", "''");
+            processedText = processedText.replace("“", "``").replace("”", "''");
             // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("�", "`").replace("�", "'").replace("�", "-").replace("�", "-");
+            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
+            // escape {} characters
+            processedText = processedText.replace("{", "\\{");
+            processedText = processedText.replace("}", "\\}");
             // escape {} characters
             processedText = processedText.replace("{", "\\{");
             processedText = processedText.replace("}", "\\}");
@@ -110,10 +113,10 @@ public class Story {
 
         } else {
             // Ficly handles quote marks, apostrophes and dashes oddly
-            processedText = processedText.replace("�", "`").replace("�", "'").replace("�", "-").replace("�", "-");
+            processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
         }
-        // ellipses are handled oddly too�
-        processedText = processedText.replace("�", "... ");
+        // ellipses are handled oddly too…
+        processedText = processedText.replace("…", "... ");
         sb.append(processedText);
         sb.append("\n\n");
         return sb.toString();

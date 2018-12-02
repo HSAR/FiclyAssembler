@@ -9,10 +9,10 @@ import io.hsar.Assembler.sites.SiteUtils;
  */
 public class StorySkeleton implements Comparable<StorySkeleton> {
 
-    private String title;
-    private String url;
-    private int ID;
-    private String author;
+    private final String title;
+    private final String url;
+    private final int ID;
+    private final String author;
     private Story story = null;
 
     public StorySkeleton(String title, String author, String url) {
@@ -65,6 +65,13 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         return url;
     }
 
+    Story fetch() {
+        if (story == null) {
+            story = SiteUtils.getFromURL(url).getStory(this);
+        }
+        return story;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -82,9 +89,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         if (getClass() != obj.getClass())
             return false;
         StorySkeleton other = (StorySkeleton) obj;
-        if (ID != other.ID)
-            return false;
-        return true;
+        return ID == other.ID;
     }
 
     @Override
@@ -94,13 +99,6 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
         } else {
             return 0;
         }
-    }
-
-    Story fetch() {
-        if (story == null) {
-            story = SiteUtils.getFromURL(url).getStory(this);
-        }
-        return story;
     }
 
 }

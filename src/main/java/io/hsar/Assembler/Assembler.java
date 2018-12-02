@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Assembler {
+class Assembler {
 
     // "Bender's Key"
     // http://ficly.com/stories/37571
@@ -26,9 +26,6 @@ public class Assembler {
 
     private static final String THANKS_LINE_REPLACER = "REPLACE_ME_THANKS_LINE";
     public static String texHeader;
-
-    private String seriesName;
-    private boolean showSeries;
 
     public Assembler() {
         try {
@@ -47,7 +44,7 @@ public class Assembler {
         fa.run(args[0]);
     }
 
-    public void run(String url) {
+    private void run(String url) {
         // get the current date in short string format to use as filename
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String dateStamp = dateformat.format((new Date()).getTime());
@@ -61,10 +58,17 @@ public class Assembler {
         texHeader = texHeader.replace(THANKS_LINE_REPLACER, siteUtils.getSiteThanks());
 
         // auto-detects series name
-        Story start = siteUtils.getStory(url);
-        seriesName = start.getSkeleton().getSeries();
+        Story start;
+        try {
+            start = siteUtils.getStory(url);
+        } catch (IOException e) {
+            System.err.println("Could not fetch page.");
+            System.err.println(e.getMessage());
+            return;
+        }
+        String seriesName = start.getSkeleton().getSeries();
         // if the series name was successfully found, then remove the series title from all following stories
-        showSeries = seriesName.equals(start.getTitle());
+        boolean showSeries = seriesName.equals(start.getTitle());
 
         System.out.println("Initial fetch complete.");
         System.out.println("Assembling series \"" + seriesName + "\" by \"" + start.getAuthor() + "\"");

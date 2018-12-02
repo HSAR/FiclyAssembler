@@ -8,12 +8,12 @@ import java.util.Stack;
 
 public class DepthFirstAssembler extends AbstractAssembler {
 
-    private Stack<StorySkeleton> stack;
+    private final Stack<StorySkeleton> stack;
 
-    private boolean showSeries = false;
+    private final boolean showSeries = false;
     private boolean showTitles = true;
-    private boolean showAuthors = true;
 
+    
     public DepthFirstAssembler(String seriesTitle, Story firstStory, Set<StorySkeleton> stories) {
         super(seriesTitle, firstStory, stories);
         stack = new Stack<>();
@@ -41,6 +41,7 @@ public class DepthFirstAssembler extends AbstractAssembler {
         while (!stack.isEmpty()) {
             Story curr = stack.pop().getStory();
             if (curr != null) {
+                boolean showAuthors = true;
                 sb.append(curr.getText(false, showAuthors, showTitles, showSeries));
                 for (StorySkeleton sequel : curr.getSequels()) {
                     stack.push(sequel);
