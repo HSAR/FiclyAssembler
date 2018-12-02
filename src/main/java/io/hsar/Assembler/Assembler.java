@@ -40,6 +40,9 @@ public class Assembler {
 
     public static void main(String[] args) {
         Assembler fa = new Assembler();
+        if (args.length < 1) {
+            throw new IllegalArgumentException("Expected a URL in program argument");
+        }
         fa.run(args[0]);
     }
 

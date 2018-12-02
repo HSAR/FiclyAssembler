@@ -6,7 +6,17 @@ import org.jsoup.nodes.Document;
 public interface Site {
     String getBaseStoryURL();
 
-    String getSiteName();
+    String getName();
+
+    String getSitePrequelTag();
+
+    String getSiteSequelTag();
+
+    String getSiteTitleTag();
+
+    String getSiteAuthorTag();
+
+    String getSiteStoryTextTag();
 
     Story parse(Document doc, String url);
 }

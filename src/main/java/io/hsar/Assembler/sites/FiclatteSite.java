@@ -1,16 +1,16 @@
 package io.hsar.Assembler.sites;
 
-public class FiclySite extends AbstractSite {
+public class FiclatteSite extends AbstractSite {
 
-    private static final String BASE_STORY_URL = "http://ficly.com/stories/";
+    private static final String BASE_STORY_URL = "https://ficlatte.com/stories/";
 
-    private static final String SITE_NAME = "ficly";
+    private static final String SITE_NAME = "ficlatte";
 
-    private static final String SITE_PREQUEL_TAG = "#prequels li.hentry [rel=bookmark previous]";
-    private static final String SITE_SEQUEL_TAG = "#sequels li.hentry [rel=bookmark previous]";
-    private static final String SITE_TITLE_TAG = "#title a";
-    private static final String SITE_AUTHOR_TAG = "#story .fn";
-    private static final String SITE_STORY_TEXT_TAG = ".entry-content";
+    private static final String SITE_PREQUEL_TAG = "#prequel-group h4.list-group-item-heading";
+    private static final String SITE_SEQUEL_TAG = "#sequel-group h4.list-group-item-heading";
+    private static final String SITE_TITLE_TAG = "#main-bit h1";
+    private static final String SITE_AUTHOR_TAG = "#main-bit span.byline a";
+    private static final String SITE_STORY_TEXT_TAG = ".content-body";
 
     @Override
     public String getBaseStoryURL() {

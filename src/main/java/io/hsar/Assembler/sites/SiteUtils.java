@@ -19,6 +19,9 @@ public class SiteUtils {
         if (url.startsWith(new FiclySite().getBaseStoryURL())) {
             return new SiteUtils(new FiclySite());
         }
+        if (url.startsWith(new FiclatteSite().getBaseStoryURL())) {
+            return new SiteUtils(new FiclatteSite());
+        }
 
         throw new IllegalArgumentException("Unsupported URL: " + url);
     }
@@ -43,6 +46,6 @@ public class SiteUtils {
     }
 
     public String getSiteName() {
-        return site.getSiteName();
+        return site.getName();
     }
 }
