@@ -58,17 +58,10 @@ class Assembler {
         texHeader = texHeader.replace(THANKS_LINE_REPLACER, siteUtils.getSiteThanks());
 
         // auto-detects series name
-        Story start;
-        try {
-            start = siteUtils.getStory(url);
-        } catch (IOException e) {
-            System.err.println("Could not fetch page.");
-            System.err.println(e.getMessage());
-            return;
-        }
+        Story start = siteUtils.getStory(url);
         String seriesName = start.getSkeleton().getSeries();
         // if the series name was successfully found, then remove the series title from all following stories
-        boolean showSeries = seriesName.equals(start.getTitle());
+        boolean showSeries = seriesName.equals(start.getTitle()); // #TODO: Pass this to DepthFirstAssembler
 
         System.out.println("Initial fetch complete.");
         System.out.println("Assembling series \"" + seriesName + "\" by \"" + start.getAuthor() + "\"");

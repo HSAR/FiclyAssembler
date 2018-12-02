@@ -78,17 +78,14 @@ public class Story {
                 sb.append(skel.getAuthor()).append("\n");
             }
         }
-        String processedText = "";
+        String processedText;
         // decode all that random &quote; HTML stuff
-        processedText = StringEscapeUtils.unescapeHtml4(text);
+        processedText = StringEscapeUtils.unescapeHtml4(text); // #TODO Switch to commons-text
         if (useTex) {
             // convert speech marks to Tex formatting
             processedText = processedText.replace("“", "``").replace("”", "''");
             // Ficly handles quote marks, apostrophes and dashes oddly
             processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
-            // escape {} characters
-            processedText = processedText.replace("{", "\\{");
-            processedText = processedText.replace("}", "\\}");
             // escape {} characters
             processedText = processedText.replace("{", "\\{");
             processedText = processedText.replace("}", "\\}");

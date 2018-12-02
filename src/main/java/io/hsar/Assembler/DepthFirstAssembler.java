@@ -13,7 +13,6 @@ public class DepthFirstAssembler extends AbstractAssembler {
     private final boolean showSeries = false;
     private boolean showTitles = true;
 
-    
     public DepthFirstAssembler(String seriesTitle, Story firstStory, Set<StorySkeleton> stories) {
         super(seriesTitle, firstStory, stories);
         stack = new Stack<>();
