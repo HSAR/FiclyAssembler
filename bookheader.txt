@@ -32,7 +32,7 @@
 % 2nd page, thanks message
 %-------------------------------------------------------------------------------
 \thispagestyle{empty}
-\thanks{Thanks to Kevin Lawver and all the folks at Ficly.}
+\thanks{REPLACE_ME_THANKS_LINE}
 \newpage
 
 

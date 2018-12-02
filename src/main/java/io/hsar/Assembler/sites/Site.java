@@ -8,6 +8,8 @@ public interface Site {
 
     String getName();
 
+    String getThanksLine();
+
     String getSitePrequelTag();
 
     String getSiteSequelTag();

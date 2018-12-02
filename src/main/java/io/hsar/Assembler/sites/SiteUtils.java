@@ -23,7 +23,7 @@ public class SiteUtils {
             return new SiteUtils(new FiclatteSite());
         }
 
-        throw new IllegalArgumentException("Unsupported URL: " + url);
+        throw new IllegalArgumentException("Unsupported URL: '" + url + "'");
     }
 
     public Story getStory(int ID) {
@@ -47,5 +47,9 @@ public class SiteUtils {
 
     public String getSiteName() {
         return site.getName();
+    }
+
+    public String getSiteThanks() {
+        return site.getThanksLine();
     }
 }

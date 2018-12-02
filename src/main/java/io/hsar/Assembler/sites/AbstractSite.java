@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractSite implements Site {
 
@@ -16,7 +17,7 @@ public abstract class AbstractSite implements Site {
         return new Story(getPrequels(doc), getSequels(doc), getTitle(doc), getAuthor(doc), url, getText(doc));
     }
 
-    public ArrayList<StorySkeleton> getPrequels(Document doc) {
+    public List<StorySkeleton> getPrequels(Document doc) {
         Elements prequels = doc.select(getSitePrequelTag());
         ArrayList<StorySkeleton> preqs = new ArrayList<>();
         for (Element prequel : prequels) {
@@ -25,7 +26,7 @@ public abstract class AbstractSite implements Site {
         return preqs;
     }
 
-    public ArrayList<StorySkeleton> getSequels(Document doc) {
+    public List<StorySkeleton> getSequels(Document doc) {
         Elements sequels = doc.select(getSiteSequelTag());
         ArrayList<StorySkeleton> seqs = new ArrayList<>();
         for (Element sequel : sequels) {

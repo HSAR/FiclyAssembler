@@ -6,6 +6,8 @@ public class FiclySite extends AbstractSite {
 
     private static final String SITE_NAME = "ficly";
 
+    private static final String THANKS_LINE = "Thanks to Kevin Lawver and all the folks at Ficly.";
+
     private static final String SITE_PREQUEL_TAG = "#prequels li.hentry [rel=bookmark previous]";
     private static final String SITE_SEQUEL_TAG = "#sequels li.hentry [rel=bookmark previous]";
     private static final String SITE_TITLE_TAG = "#title a";
@@ -20,6 +22,11 @@ public class FiclySite extends AbstractSite {
     @Override
     public String getName() {
         return SITE_NAME;
+    }
+
+    @Override
+    public String getThanksLine() {
+        return THANKS_LINE;
     }
 
     @Override

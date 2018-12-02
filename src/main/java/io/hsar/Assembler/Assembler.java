@@ -24,24 +24,25 @@ public class Assembler {
     // "Airships: A Blood-Red Cloak"
     // http://ficly.com/stories/31023
 
-    public static String texheader = "";
+    private static final String THANKS_LINE_REPLACER = "REPLACE_ME_THANKS_LINE";
+    public static String texHeader;
 
     private String seriesName;
     private boolean showSeries;
 
     public Assembler() {
         try {
-            texheader = new String(Files.readAllBytes(Paths.get("bookheader.txt")));
+            texHeader = new String(Files.readAllBytes(Paths.get("bookheader.txt")));
         } catch (IOException e) {
             System.err.println("HEADER FILE READ OPERATION FAILED");
-            texheader = "%% HEADER FILE READ OPERATION FAILED";
+            texHeader = "%% HEADER FILE READ OPERATION FAILED";
         }
     }
 
     public static void main(String[] args) {
         Assembler fa = new Assembler();
         if (args.length < 1) {
-            throw new IllegalArgumentException("Expected a URL in program argument");
+            throw new IllegalArgumentException("Expected a URL in the program argument.");
         }
         fa.run(args[0]);
     }
@@ -55,9 +56,11 @@ public class Assembler {
 
         System.out.println("Program initialised.");
 
-        // auto-detect site
+        // detect site, add site-default thanks
         SiteUtils siteUtils = SiteUtils.getFromURL(url);
-        // auto-detect series name
+        texHeader = texHeader.replace(THANKS_LINE_REPLACER, siteUtils.getSiteThanks());
+
+        // auto-detects series name
         Story start = siteUtils.getStory(url);
         seriesName = start.getSkeleton().getSeries();
         // if the series name was successfully found, then remove the series title from all following stories
@@ -75,7 +78,7 @@ public class Assembler {
         System.out.println("Data fetch complete.");
 
         // run typesetting
-        String result = series.assembleTex();
+        String result = series.assembleTex(texHeader);
 
         System.out.println("Typesetting complete.");
 

@@ -1,6 +1,5 @@
 package io.hsar.Assembler.model;
 
-import io.hsar.Assembler.Assembler;
 import io.hsar.Assembler.DepthFirstAssembler;
 
 import java.util.HashSet;
@@ -40,10 +39,9 @@ public class Series {
         }
     }
 
-    public String assembleTex() {
+    public String assembleTex(String header) {
         // auto-prepend headers
         // assembler only handles the individual stories
-        String header = Assembler.texheader;
         if (title != null) {
             // set title field, if present
             header = header.replace("===TITLE===", title);
