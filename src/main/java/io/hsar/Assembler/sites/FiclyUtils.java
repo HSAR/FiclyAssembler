@@ -1,3 +1,7 @@
+package io.hsar.Assembler.sites;
+
+import io.hsar.Assembler.model.Story;
+import io.hsar.Assembler.model.StorySkeleton;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

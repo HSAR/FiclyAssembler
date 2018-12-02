@@ -1,3 +1,9 @@
+package io.hsar.Assembler;
+
+import io.hsar.Assembler.model.Series;
+import io.hsar.Assembler.model.Story;
+import io.hsar.Assembler.sites.FiclyUtils;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -59,7 +65,7 @@ public class FiclyAssembler {
         System.out.println("Data fetch complete.");
 
         // run typesetting
-        String result = series.assembleTex(Series.AssemblerType.depth_first);
+        String result = series.assembleTex();
 
         System.out.println("Typesetting complete.");
 

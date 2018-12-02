@@ -1,10 +1,18 @@
+package io.hsar.Assembler.model;
+
+import io.hsar.Assembler.DepthFirstAssembler;
+import io.hsar.Assembler.FiclyAssembler;
+import io.hsar.Assembler.sites.FiclyUtils;
+
 import java.util.*;
 
 public class Series {
 
-    enum AssemblerType {
-        depth_first, breadth_first
-    };
+    public String assembleString() {
+        return new DepthFirstAssembler(start, stories).toString();
+    }
+
+    ;
 
     private String title;
     private Story start;
@@ -46,17 +54,7 @@ public class Series {
         }
     }
 
-    public String assembleString(AssemblerType at) {
-        switch (at) {
-        case depth_first:
-            return new DepthFirstAssembler(start, stories).toString();
-        default:
-            break;
-        }
-        return "";
-    }
-
-    public String assembleTex(AssemblerType at) {
+    public String assembleTex() {
         // auto-prepend headers
         // assembler only handles the individual stories
         String header = FiclyAssembler.texheader;
@@ -74,17 +72,15 @@ public class Series {
             }
             authorSectionSB.append("}");
             header = header.replace("===AUTHORS===", authorSectionSB.toString());
-            
+
         }
         StringBuilder sb = new StringBuilder(header);
-        switch (at) {
-        case depth_first:
-            sb.append(new DepthFirstAssembler(start, stories).toTex());
-            sb.append("\\end{document}");
-            return sb.toString();
-        default:
-            break;
-        }
+        sb.append(new DepthFirstAssembler(start, stories).toTex());
+        sb.append("\\end{document}");
         return sb.toString();
+    }
+
+    enum AssemblerType {
+        depth_first, breadth_first
     }
 }

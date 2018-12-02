@@ -1,24 +1,29 @@
+package io.hsar.Assembler;
+
+import io.hsar.Assembler.model.Story;
+import io.hsar.Assembler.model.StorySkeleton;
+
 import java.util.Set;
 import java.util.Stack;
 
 public class DepthFirstAssembler extends AbstractAssembler {
 
     private Stack<StorySkeleton> stack;
-    
+
     private boolean showSeries = false;
     private boolean showTitles = true;
     private boolean showAuthors = true;
-    
+
     public DepthFirstAssembler(String seriesTitle, Story firstStory, Set<StorySkeleton> stories) {
         super(seriesTitle, firstStory, stories);
-        stack = new Stack<StorySkeleton>();
+        stack = new Stack<>();
         stack.push(firstStory.getSkeleton());
     }
 
-    
+
     public DepthFirstAssembler(Story firstStory, Set<StorySkeleton> stories) {
         super(null, firstStory, stories);
-        stack = new Stack<StorySkeleton>();
+        stack = new Stack<>();
         stack.push(firstStory.getSkeleton());
     }
 

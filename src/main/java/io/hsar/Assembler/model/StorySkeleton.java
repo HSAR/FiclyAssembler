@@ -1,6 +1,10 @@
+package io.hsar.Assembler.model;
+
+import io.hsar.Assembler.sites.FiclyUtils;
+
 /**
  * @author HSAR
- * 
+ *
  *         Represents a story which has not been fetched yet.
  */
 public class StorySkeleton implements Comparable<StorySkeleton> {
@@ -26,7 +30,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
     public String getSeries() {
         return title.split(": ")[0];
     }
-    
+
     public String getAuthor() {
         return author;
     }
@@ -46,7 +50,7 @@ public class StorySkeleton implements Comparable<StorySkeleton> {
     public Story getStory() {
         return story;
     }
-    
+
     public Story fetch() {
         if (story == null) {
             story = FiclyUtils.getStory(this);

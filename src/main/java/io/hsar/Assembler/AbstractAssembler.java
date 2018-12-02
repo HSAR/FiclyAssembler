@@ -1,7 +1,12 @@
+package io.hsar.Assembler;
+
+import io.hsar.Assembler.model.Story;
+import io.hsar.Assembler.model.StorySkeleton;
+
 import java.util.Set;
 
 public abstract class AbstractAssembler {
-    
+
     protected Set<StorySkeleton> stories;
 
     private String seriesTitle;
@@ -13,9 +18,9 @@ public abstract class AbstractAssembler {
         this.stories = stories;
         this.firstStory = firstStory;
     }
-    
+
     public abstract String toString();
-    
+
     public abstract String toTex();
 
 }

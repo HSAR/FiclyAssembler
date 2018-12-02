@@ -1,3 +1,5 @@
+package io.hsar.Assembler.model;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.List;
