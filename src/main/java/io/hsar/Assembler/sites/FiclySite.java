@@ -13,9 +13,16 @@ public class FiclySite implements Site {
 
     private static final String BASE_STORY_URL = "http://ficly.com/stories/";
 
+    private static final String SITE_NAME = "ficly";
+
     @Override
     public String getBaseStoryURL() {
         return BASE_STORY_URL;
+    }
+
+    @Override
+    public String getSiteName() {
+        return SITE_NAME;
     }
 
     public Story parse(Document doc, String url) {

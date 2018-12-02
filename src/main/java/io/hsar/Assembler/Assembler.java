@@ -79,7 +79,7 @@ public class Assembler {
         // print to file
         String saveFileName = "CRITICAL ERROR";
         try {
-            saveFileName = "ficly" + "_" + seriesName + "_" + dateStamp + ".txt";
+            saveFileName = siteUtils.getSiteName() + "_" + seriesName + "_" + dateStamp + ".txt";
             // declare savefile object
             File saveFile = new File(saveFileName);
             if (!saveFile.exists()) {

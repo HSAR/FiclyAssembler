@@ -41,4 +41,8 @@ public class SiteUtils {
             return null;
         }
     }
+
+    public String getSiteName() {
+        return site.getSiteName();
+    }
 }
