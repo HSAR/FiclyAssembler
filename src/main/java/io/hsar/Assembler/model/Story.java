@@ -103,6 +103,12 @@ public class Story {
             processedText = processedText.replace("#", "\\#");
             // escape ampersand characters
             processedText = processedText.replace("&", "\\&");
+            // escape umlaut characters
+            processedText = processedText
+                    .replace("ä", "\\\"a")
+                    .replace("ö", "\\\"o")
+                    .replace("ü", "\\\"u")
+                    .replace("ß", "\\ss");
 
             // Ficly handles quote marks, apostrophes and dashes oddly
             processedText = processedText.replace("‘", "`").replace("’", "'").replace("–", "-").replace("—", "-");
