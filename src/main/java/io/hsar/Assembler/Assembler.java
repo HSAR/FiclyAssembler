@@ -27,6 +27,9 @@ class Assembler {
     // "Gunfire: The Target"
     // https://ficlatte.com/stories/40067/
 
+    // "Tube Alloys"
+    // https://ficlatte.com/stories/41634/
+
     private static final String THANKS_LINE_REPLACER = "REPLACE_ME_THANKS_LINE";
     public static String texHeader;
 
@@ -83,7 +86,7 @@ class Assembler {
         System.out.println("Typesetting complete.");
 
         // print to file
-        String saveFileName = "CRITICAL ERROR";
+        String saveFileName;
         try {
             saveFileName = siteUtils.getSiteName() + "_" + seriesName + "_" + dateStamp + ".txt";
             // declare savefile object
@@ -99,13 +102,13 @@ class Assembler {
             printstream.println(result);
             // close file
             printstream.close();
+            System.out.println("Output saved to \"" + saveFile.getAbsolutePath() + "\"");
         } catch (FileNotFoundException e) {
             // this is a non-critical method and so does not stack-trace on fail
             System.err.println(e.toString());
         }
 
         System.out.println("Program run complete.");
-        System.out.println("Output saved to \"" + saveFileName + "\"");
     }
 
 }
